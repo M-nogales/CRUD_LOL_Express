@@ -1,0 +1,180 @@
+<%- include("template/cabecera",{tituloWeb: "Panel de Administración" }) %>
+
+  <div class="container">
+    <h1>CRUD League Of Legends Champions</h1>
+    <a class="btn btn-success btn-block my-4" data-bs-toggle="modal" data-bs-target="#createChampionModal">Create
+      Champion</a>
+
+    <table class="table table-responsive table-hover ">
+      <thead>
+        <tr>
+          <th scope="col">#id</th>
+          <th scope="col">name</th>
+          <th scope="col">Role</th>
+          <th scope="col">Descripction</th>
+          <th scope="col">Acctions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (arrayChampion.length> 0) { %>
+          <% arrayChampion.forEach(champion=> { %>
+            <tr>
+              <th scope="row">
+                <%= champion.id %>
+              </th>
+              <td>
+                <%= champion.name %>
+              </td>
+              <td>
+                <%= champion.role %>
+              </td>
+              <td class="text-truncate w_max">
+                <%= champion.description %>
+              </td>
+              <td>
+                <a class="btn btn-warning m-1 editChamp" data-id="<%= champion._id %>" data-bs-toggle="modal" data-bs-target="#editChampionModal"><i
+                    class="bi bi-pencil"></i> Editar</a>
+                <a class="btn btn-danger deleteChamp" data-bs-toggle="modal" data-bs-target="#confirmModal"
+                  data-id="<%= champion._id %>"><i class="bi-trash"></i>
+                  Remove</a>
+              </td>
+            </tr>
+            <% }) %>
+              <% } else { %>
+                <tr>
+                  <td colspan="5">No Champs around...</td>
+                </tr>
+                <% } %>
+      </tbody>
+    </table>
+    <!-- modal confirmar eliminar -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmModalLabel">Confirmation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ¿Are you sure you want to remove the champion?
+          </div>
+          <div class="modal-footer">
+            <a id="confirmRemove" class="btn btn-danger" href="/dato">Remove</a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal create champ -->
+    <div class="modal fade" id="createChampionModal" tabindex="-1" aria-labelledby="createChampionModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createChampionModalLabel">Crear Campeón</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Formulario para crear un campeón -->
+            <form action="/" method="post">
+              <div class="mb-3">
+                <label for="championName" class="form-label">Nombre del Campeón</label>
+                <input type="text" class="form-control" id="championName" name="name" placeholder="Akali" required>
+              </div>
+              <div class="mb-3">
+                <label for="championAbilities" class="form-label">Habilidades</label>
+                <div class="row">
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" name="abilities.Q" placeholder="Q" required>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" name="abilities.W" placeholder="W" required>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" name="abilities.E" placeholder="E" required>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" name="abilities.R" placeholder="R" required>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="championRole" class="form-label">Rol</label>
+                <input type="text" class="form-control" id="championRole" name="role" placeholder="Assasin" required>
+              </div>
+              <div class="mb-3">
+                <label for="championDescription" class="form-label">Descripción</label>
+                <textarea class="form-control" id="championDescription" name="description" rows="3" placeholder="Lore"
+                  required></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="championImage" class="form-label">Imagen del Campeón</label>
+                <input type="text" class="form-control" id="championImage" name="image" placeholder="Image URL"
+                  required>
+              </div>
+              <button type="submit" class="btn btn-primary">Crear</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal edit champ -->
+    <!-- Modal para Editar Campeón -->
+    <div class="modal fade" id="editChampionModal" tabindex="-1" aria-labelledby="editChampionModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editChampionModalLabel">Editar Campeón</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Formulario para editar un campeón -->
+            <form id="editChampionForm">
+              <div class="mb-3">
+                <label for="championId" class="form-label">ID del Campeón</label>
+                <input type="number" class="form-control" id="championId" name="id" required >
+              </div>
+              <div class="mb-3">
+                <label for="championName" class="form-label">Nombre del Campeón</label>
+                <input type="text" class="form-control" id="editChampionName" name="editName" required>
+              </div>
+              <div class="mb-3">
+                <label for="championAbilities" class="form-label">Habilidades</label>
+                <div class="row">
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" id="championQ" name="edit.Abilities.Q" placeholder="Q" required>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" id="championW" name="edit.Abilities.W" placeholder="W" required>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" id="championE" name="edit.Abilities.E" placeholder="E" required>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" id="championR" name="edit.Abilities.R" placeholder="R" required>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="championRole" class="form-label">Rol</label>
+                <input type="text" class="form-control" id="editChampionRole" name="editRole" required>
+              </div>
+              <div class="mb-3">
+                <label for="championDescription" class="form-label">Descripción</label>
+                <textarea class="form-control" id="editChampionDescription" name="editDescription" rows="3" required></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="championImage" class="form-label">Imagen del Campeón</label>
+                <input type="text" class="form-control" id="editChampionImage" name="editImage" placeholder="URL de la imagen"
+                  required>
+              </div>
+              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <%- include("template/footer") %>

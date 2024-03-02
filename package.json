@@ -1,0 +1,28 @@
+{
+  "name": "primer_express",
+  "version": "1.0.0",
+  "description": "Ejemplos básicos con el Framework Expressjs",
+  "main": "launcher.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch launcher.js",
+    "start": "node launcher.js"
+  },
+  "keywords": [
+    "express",
+    "node.js"
+  ],
+  "author": "M-nogales",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "bootstrap-icons": "^1.11.3",
+    "bootstrap5": "^1.1.9",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.3",
+    "nodemon": "^3.0.3"
+  }
+}
