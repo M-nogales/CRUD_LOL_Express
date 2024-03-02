@@ -1,0 +1,4 @@
+USER=LeagueAdmin
+PASSWORD=hhp8TXkN9I6RlfeA
+DBNAME=LeagueOfLegends
+PORT=3000
