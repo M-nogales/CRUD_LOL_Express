@@ -1,0 +1,51 @@
+<%- include("template/cabecera",{tituloWeb: "Lista de campeones" }) %>
+  <div class="container">
+    <a class="btn btn-dark btn-block my-4 text-white" href="/">Admin panel</a>
+    <h1>Champion List</h1>
+
+    <div class="row">
+      <% if (arrayChampion.length> 0) { %>
+        <% arrayChampion.forEach(champion=> { %>
+          <div class="col-md-4 col-sm-12">
+            <div class="card mb-4">
+              <img src="imgs/<%= champion.image %>" class="card-img-top img_width" alt="Imagen del campeón">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%= champion.name %>
+                </h5>
+                <p class="card-text ">
+                  <strong>Habilidades:</strong>
+                <ul>
+                  <li>Q: <%= champion.abilities.Q %>
+                  </li>
+                  <li>W: <%= champion.abilities.W %>
+                  </li>
+                  <li>E: <%= champion.abilities.E %>
+                  </li>
+                  <li>R: <%= champion.abilities.R %>
+                  </li>
+                </ul>
+                <strong>Rol:</strong>
+                <%= champion.role %>
+                  <br>
+                  <strong>Descripción:</strong>
+                  <%= champion.description %>
+                    </p>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+            <% } else { %>
+              <div class="col-12">
+                <div class="alert alert-warning" role="alert">
+                  No hay campeones disponibles.
+                </div>
+              </div>
+              <% } %>
+    </div>
+
+
+  </div>
+
+
+  <%- include("template/footer") %>

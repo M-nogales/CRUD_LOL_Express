@@ -1,7 +1,6 @@
 "use strict";
 
 let deleteChampLinks = document.querySelectorAll(".deleteChamp");
-console.log(deleteChampLinks);
 let RemoveModalLink = document.querySelector("#confirmRemove");
 
 // para cada elemento con la clase .deleteChamp
@@ -63,51 +62,61 @@ editChampLinks.forEach(function (editChampLink) {
     document.querySelector("#editChampionRole").value = res.champion.role;
     document.querySelector("#editChampionDescription").value =
       res.champion.description;
-    document.querySelector("#editChampionImage").value = res.champion.image;
-
+    document.querySelector(
+      "#editChampionImage"
+    ).src = `imgs/${res.champion.image}`;
     // Modificar el atributo 'action' del formulario para incluir el ID del campeón
     editForm.action = `/${editChampionId}`;
     editForm.dataset.championId = editChampionId;
   });
 });
 
+//al hacer click en la imagen se abre un input para añadir una nueva imagen
+document.getElementById('editChampionImage').addEventListener('click', function() {
+  document.getElementById('editImageInput').click();
+});
+
 editForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-
-  // Obtener el ID del campeón del dataset del formulario
-  const championId = editForm.dataset.championId;
-  console.log(editForm.elements);
-  const id = editForm.elements["id"].value;
-  console.log(editForm.elements["edit.Abilities.Q"].value);
-  const name = editForm.elements["editName"].value;
-  const Q = editForm.elements["edit.Abilities.Q"].value;
-  const W = editForm.elements["edit.Abilities.W"].value;
-  const E = editForm.elements["edit.Abilities.E"].value;
-  const R = editForm.elements["edit.Abilities.R"].value;
-  const role = editForm.elements["editRole"].value;
-  const description = editForm.elements["editDescription"].value;
-  const image = editForm.elements["editImage"].value;
-
-  // Enviar los datos utilizando fetch de tipo PUT
-  const data = await fetch(`/${championId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id,
-      name,
-      abilities: { Q, W, E, R },
-      role,
-      description,
-      image,
-    }),
+  let championId2 = editForm.dataset.championId;
+  //guardamos los datos en un objeto formidable e imgs
+  const formData = new FormData(editForm);
+ 
+  // Añadimos el archivo al objeto FormData
+  const imageFile = document.getElementById('editImageInput').files[0];
+  if (imageFile) {
+     formData.append('editImage', imageFile);
+  }
+ 
+  const data = await fetch(`/${championId2}`, {
+     method: "PUT",
+     body: formData,
   });
-
+ 
   const res = await data.json();
   if (res.estado) {
-    window.location.href = "/";
+     window.location.href = "/";
   } else {
-    console.log(res);
+    showAlert(res.mensaje);
+    }
+ });
+
+ function showAlert(message) {
+  const table = document.getElementById('table');
+  if (!table) {
+      console.error('No se encontró la tabla con el ID "table"');
+      return;
   }
-});
+
+  // Crear el contenedor de alerta
+  const alertContainer = document.createElement('div');
+  alertContainer.innerHTML = `
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          ${message}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+  `;
+
+  // Insertar el contenedor de alerta justo antes de la tabla
+  table.parentNode.insertBefore(alertContainer, table);
+}

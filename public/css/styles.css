@@ -1,3 +1,9 @@
 .w_max{
   max-width: 41.667vw;
 }
+.cursorPointer:hover{
+cursor: pointer;
+}
+.card{
+  max-width: 95%;
+}

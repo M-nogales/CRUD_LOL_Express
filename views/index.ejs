@@ -4,9 +4,9 @@
     <h1>CRUD League Of Legends Champions</h1>
     <a class="btn btn-success btn-block my-4" data-bs-toggle="modal" data-bs-target="#createChampionModal">Create
       Champion</a>
-    <a class="btn btn-info btn-block my-4 text-white" href="/showChamps" >Show Champs</a>
+    <a class="btn btn-dark btn-block my-4 text-white" href="/showChamps">Show Champs</a>
 
-    <table class="table table-responsive table-hover ">
+    <table class="table table-responsive table-hover " id="table">
       <thead>
         <tr>
           <th scope="col">#id</th>
@@ -112,7 +112,7 @@
               <div class="mb-3">
                 <label for="championImage" class="form-label">Imagen del Campeón</label>
                 <input type="file" class="form-control" id="championImage" name="image" required>
-               </div>
+              </div>
 
               <button type="submit" class="btn btn-primary">Crear</button>
             </form>
@@ -171,11 +171,15 @@
                 <textarea class="form-control" id="editChampionDescription" name="editDescription" rows="3"
                   required></textarea>
               </div>
+              <div class="mb-3 text-center">
+                <img id="editChampionImage" class="cursorPointer w-50 " alt="image of the champion">
+              </div>
+
               <div class="mb-3">
                 <label for="championImage" class="form-label">Imagen del Campeón</label>
-                <input type="text" class="form-control" id="editChampionImage" name="editImage"
-                  placeholder="URL de la imagen" required>
+                <input type="file" class="form-control" name="editImage" id="editImageInput">
               </div>
+
               <button type="submit" class="btn btn-primary">Guardar Cambios</button>
             </form>
           </div>

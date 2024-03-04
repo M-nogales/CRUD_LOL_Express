@@ -12,7 +12,8 @@ const championSchema = new Schema({
         R: String
     },
     role:String,
-    description:String
+    description:String,
+    image: String
 });
 // para evitar la inserción de __V:0... no necesario, registro de veces actualizado un doc
 // aunque a mi sinceramente no me aumenta la contidad, se mantiene en 0
