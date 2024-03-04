@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Champion = require("../models/champion");
 
+
+
 router.get("/create", (req, res) => {
   res.render("crear");
 });
@@ -16,6 +18,8 @@ router.get("/", async (req, res) => {
 });
 //create "save"
 router.post("/", async (req, res) => {
+  console.log("esfesf");
+  console.log(req.body);
   const body = req.body; // gracias al bodyparser podremos
   // recuperar todo lo que viene del body
   console.log(body);

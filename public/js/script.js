@@ -13,7 +13,6 @@ deleteChampLinks.forEach(function (deleteChampLink) {
     // Id del campeón seleccionado
     let championId = this.dataset.id;
     // Actualiza el atributo 'href' del enlace dentro del modal con el ID del campeón
-    console.log("Efsf");
     RemoveModalLink.href = `/${championId}`;
   });
 });
